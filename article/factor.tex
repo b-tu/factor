@@ -1,0 +1,211 @@
+\documentclass[12pt]{article}
+
+% change to a4 layout
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	top=15mm,
+}
+
+% maths packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+
+% references
+\usepackage{natbib}
+
+% table packages
+\usepackage{booktabs} 
+
+% colour
+\usepackage{xcolor}
+
+% enumerate
+\usepackage[shortlabels]{enumitem}
+
+% images
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+
+% theorems
+% \newtheorem{definition}{Definition}[section]
+% \newtheorem{lemma}{Lemma}[section]
+% \newtheorem{proposition}{Proposition}[section]
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{remark}{Remark}[section]
+% \newtheorem{example}{Example}[section]
+% \newtheorem{corollary}{Corollary}[section]
+% \newtheorem{assumption}{Assumption}[section]
+
+% full stop after paragraph
+\makeatletter
+\renewcommand\paragraph{%
+	\@startsection{paragraph}
+	{4}
+	{\z@}
+	{3.25ex \@plus1ex \@minus.2ex}
+	{-1em}
+	{\normalfont\normalsize\bfseries\maybe@addperiod}%
+}
+\newcommand{\maybe@addperiod}[1]{%
+	#1\@addpunct{.}%
+}
+\makeatother
+
+% hyperlinks
+\usepackage[pagebackref]{hyperref}       
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,
+	citecolor=blue,      
+	urlcolor=blue,
+}
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+	\ifcase #1 Not cited.%
+	\or        Cited on page~#2.%
+	\else      Cited on pages~#2.%
+	\fi}
+
+% reference   
+\usepackage{cleveref}
+\crefname{section}{Section}{Sections}
+% \crefname{figure}{Figure}{Figures}
+% \crefname{definition}{Definition}{Definitions}
+% \crefname{lemma}{Lemma}{Lemmas}
+% \crefname{proposition}{Proposition}{Propositions}
+% \crefname{theorem}{Theorem}{Theorems}
+% \crefname{remark}{Remark}{Remarks}
+% \crefname{corollary}{Corollary}{Corollaries}
+% \crefname{appendix}{Appendix}{Appendices}
+% \crefname{assumption}{Assumption}{Assumptions}
+% \crefname{example}{Example}{Examples}
+% \crefname{table}{Table}{Tables}
+
+% references
+\renewcommand\bibname{References}
+\usepackage[nottoc,numbib]{tocbibind}
+
+% paragraphs
+\usepackage[parfill]{parskip}
+
+% caption
+\usepackage[font=footnotesize,labelfont=bf, textfont=it]{caption}
+
+% correct bookmarks
+\usepackage{crossreftools}
+\pdfstringdefDisableCommands{%
+	\let\Cref\crtCref
+	\let\cref\crtcref
+}
+
+% definitions of some handy macros
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\title{Active portfolio management}
+\author{
+	b-tu
+}
+
+\begin{document}
+\maketitle
+The goal of this article is to present a focussed and subjective summary on the ideas covered in the book by \cite{grinold1999} and the surrounding literature.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Notation}
+For the most part, we adopt our own notation, which slightly differs from the set up presented by \cite{grinold1999}. For bookkeeping purposes, we now provide a (non-exhaustive) list of some of the main notation that are used in this work, but not registered anywhere else.
+\begin{itemize}
+    \item We let $[N] := \{1,\dots,N\}$ for any positive integer $N > 0$.
+    \item \textcolor{red}{TODO: add more items}
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background concepts}
+The goal of this section is to highlight some of the core conventions and ideas that are often present in the finance literature.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Returns}
+The return of an investment is often reported in the percentage range. That is, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the proportional change in profit). Concretely, suppose we have an asset $\mathcal{A}$ whose value is given by $V_{t_0}(\mathcal{A}) \in \mathbb{R}$ at time $t_0$ and $V_T(\mathcal{A}) \in \mathbb{R}$ at some future time $T$, then the return of this stock at this latest time is given by
+\begin{equation}
+    R_T(\mathcal{A}) = \frac{V_T(\mathcal{A}) - V_{t_0}(\mathcal{A})}{V_{t_0}(\mathcal{A})} \in \mathbb{R}.
+    \label{eqn:return}
+\end{equation}
+Notice that this number tends to infinity when the initial value approaches zero (i.e.\ in the limit we can get infinite return without putting up any prior investment).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Everything is relative}
+Performance assessment is traditionally defined on a relative basis. That is, one typically computes the performance of a financial strategy in comparison to another one. More precisely, we are often interested in the relative (or excess) return of an investment,
+\begin{equation}
+    \mathcal{R}_T := R_T(\mathcal{A}) - R_T(\mathcal{B}),
+    \label{eqn:relative_return}
+\end{equation}
+where $R_T(\mathcal{A})$ and $R_T(\mathcal{B})$ denotes the return from an asset $\mathcal{A}$ and benchmark $\mathcal{B}$ at time $T$, respectively. Practitioners often set this benchmark rate to either the risk-free rate or the market rate.
+
+\paragraph{Risk-free rate} The risk-free rate refers to the (hypothetical) minimum rate of return that one might desire from an investment. Typically, this rate is set to the return of a financial product whose risk is minimal\footnote{Ideally, one would like to consider a zero risk investment---although realistically there is always a risk associated with any investment.}. In practice, it is common to see this rate being set to the return of the US Treasury bill or a long-term government bond yield.
+
+\paragraph{Market rate} The market rate usually refers to the return achieved by a financial product that tries to match the market as a whole (or at least some subset of it). This market portfolio is usually constructed by taking all of the assets in the desired market and then weighting them according to their value (i.e.\ their market capitilisation).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The nature of time}
+The distinction between an ex-ante (before the event) approach and an ex-post (after the event) approach is often very subtle in the finance literature. For example, one might take an ex-ante approach when one is interested in forecasting and making predictions of the future. In contrast, one might take an ex-post approach in the performance assessment setting, where one is interested in assessing the quality\footnote{Here the term quality is defined in the philosophical sense. In general, it is very hard to actually quantify what distinguishes a skillful investor and a lucky one.} of a strategy or a portfolio manager.
+
+\paragraph{Risk analysis} A core problem in asset management is concerned with the quantification of risk. It is important to note that one is interested in estimating risk in both the ex-ante and ex-post setting. In the ex-ante setting, we are interested estimating risk in order to incorporate it into our active decision-making. Whilst, in the ex-post setting, we are interested in assessing risk in order to both assess the realised performance and to identify the main drivers of risk (after the fact).
+
+\paragraph{Information set} We denote the information set at time $t$ by $I_t \in \mathbb{I}$, where $\mathbb{I}$ denotes the set of all possible information sets. Confusingly, we allow this information set to be defined ambiguously in order to accommodate for both the ex-ante and ex-post setting. More specifically, in the ex-ante (or ex-post) setting, $I_t$ denotes the information set containing all of the information available at the beginning (or end) of time $t$. This convention is convenient from a writing perspective as it covers these two different temporal settings simultaneously, although it is definitely a confusing from a reader perspective who could easily be misled.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Garbage in, garbage out}
+A central tenet that is echoed throughout the book by \cite{grinold1999} is  the idea that the ability to identify and exploit ``superior information'' is what separates a good active manager from a bad one. In other words, to generate excess returns (i.e.\ to beat a benchmark), one needs to be diligent in both their ability to collect useful information and their ability to use it effectively. Most of the work presented by \cite{grinold1999} focusses on addressing the latter problem. We will cover a selection of these ideas in the following sections \textcolor{red}{TODO:link}. The former problem, however, is a practical challenge that remains largely subjective and up for debate. Regardless of how one approaches this information retrieval problem, one inevitably will fall upon the well-know adage: ``garbage in, garbage out''. That is, our inability to identify information of a `reasonable' quality will, more often than lot, lead to losses and failures. Therefore, it remains an important and unquestionable part of asset management, that one must aspire to collect high quality data in order to make better decisions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modelling the returns}
+One of the main problems in active portfolio management is concerned with the modelling of excess returns \eqref{eqn:relative_return}. In particular, one often tries to model the excess returns of an asset $\mathcal{A}$, at time $t > 0$, relative to a benchmark $\mathcal{B}$, as a function of the information set:
+\begin{equation}
+    \mathcal{R}_t = f(I_t) + \epsilon_t,
+    \label{eqn:return_model}
+\end{equation}
+where $I_t \in \mathbb{I}$ denotes the $t$-th information set, $f: \mathbb{I} \rightarrow \mathbb{R}$ denotes the modelling function (for the excess returns) and $\epsilon_t \in \mathbb{R}$ denotes the random residual. In the following, we list some notable ideas that underpin this general model for excess returns \eqref{eqn:return_model}.
+
+\begin{itemize}
+    \item \textbf{Dependence on investor.} Notably, the form of the information set $I_t$ and function $f$ is something that is specified by the user; the residual $\epsilon_t$ denotes everything else that is left over. On practical level, this means that different investors can obtain different results even if they adopt the same modelling function $f$. 
+    \item \textbf{Information uncertainty.} Formally, the information set $I_t$ is treated as a random variable. In particular, the randomness of $I_t$ stems from the intrinsic uncertainty that naturally arises from the collection, retrieval and processing of real-world data. 
+    \item \textbf{Residual uncertainty.} The residual $\epsilon_t = \mathcal{R}_t - f(I_t)$ models the remaining discrepancy that is not accounted for by the ``explained'' part of the excess returns $f(I_t)$. Note here that the residual $\epsilon_t$ is a random variable because both $\mathcal{R}_t$ and $I_t$ are random variables.
+\end{itemize}
+
+Although one might attempt to directly model the excess returns, it is perhaps more common in the literature to try and model the expectation of the excess returns:
+\begin{equation}
+    \bar{\mathcal{R}_t} := \mathbb{E}[\mathcal{R}_t] = \mathbb{E}[f(I_t)] + \mathbb{E}[\epsilon_t].
+\end{equation}
+The expectation here is over all of the relevant randomness in the world. More precisely, this expectation is over the random information set $I_t$ and the random residual $\epsilon_t$. Instead of relying on \eqref{eqn:return_model} to model the expected excess returns, practitioner often resort to an estimate of the following form:
+\begin{equation}
+    \bar{\mathcal{R}_t} = g(I_t) + \eta_t,
+    \label{eqn:expected_return_model}
+\end{equation}
+where $g: \mathbb{I} \rightarrow \mathbb{R}$ denotes the modelling function (for the expected excess returns) and $\eta_t \in \mathbb{R}$ denotes the corresponding residual. Mathematically, this latter model \eqref{eqn:expected_return_model} is equivalent to the former model \eqref{eqn:return_model} but with a different target. Notably, in the latter case the randomness in the residual $\eta_t = \bar{\mathcal{R}}_t - g(I_t)$ stems solely from the randomness in $I_t$ as $\bar{\mathcal{R}_t}$ is a constant.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Machine learning}
+\textcolor{red}{TODO:just drafted some preliminary ideas.}
+\\ \\
+Given a fixed form for the information set $I_t$, it is tempting to treat \eqref{eqn:return_model} and \eqref{eqn:expected_return_model} as a classic machine learning problem. That is, we select the function $f$ or $g$ from a particularly expressive family of models $\mathbb{M}$ and minimise some reasonable loss function in order to find the ``best'' model. 
+
+\paragraph{Regression on the excess returns} To find the best model for \eqref{eqn:return_model}, we just minimise some discrepancy $\mathcal{D}$ between the distribution of excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated discrepancy:
+\begin{equation}
+    f^* \in \argmin_{f \in \mathbb{M}} \int_{t \in \mathbf{T}} \mathcal{D}(\mathcal{R}_t, f(I_t)) dt,
+\end{equation}
+for some appropriate time horizon $\mathbf{T}$.
+
+\paragraph{Regression on the expected excess returns} To find the best model for \eqref{eqn:expected_return_model}, we just minimise some scoring function $S$ between the expected excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated score:
+\begin{equation}
+    g^* \in \argmin_{g \in \mathbb{M}} \int_{t \in \mathbf{T}} S(g(I_t), \bar{\mathcal{R}}_t) dt,
+\end{equation}
+for some appropriate time horizon $\mathbf{T}$.
+\\ \\
+Both of these models rely on quantities or things we might not be able to compute or optimise in practice. They are just equations to keep in mind. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mean-variance trade-off}
+\section{Cross-sectional vs time series}
+\section{Linear vs non-linear}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{factor}
+\end{document}

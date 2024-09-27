@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Grinold and Kahn(1999)]{grinold1999}
+Richard~C. Grinold and Ronald~N. Kahn.
+\newblock \emph{Active {Portfolio} {Management} : {A} quantative approach for producing superior returns and selecting superior money managers}.
+\newblock McGraw Hill, New York, NY, 2nd edition edition, November 1999.
+\newblock ISBN 978-0-07-024882-3.
+
+\end{thebibliography}
