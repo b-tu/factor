@@ -35,7 +35,7 @@
 % \newtheorem{lemma}{Lemma}[section]
 % \newtheorem{proposition}{Proposition}[section]
 % \newtheorem{theorem}{Theorem}[section]
-% \newtheorem{remark}{Remark}[section]
+\newtheorem{remark}{Remark}[section]
 % \newtheorem{example}{Example}[section]
 % \newtheorem{corollary}{Corollary}[section]
 % \newtheorem{assumption}{Assumption}[section]
@@ -117,93 +117,183 @@
 The goal of this article is to present a focussed and subjective summary on the ideas covered in the book by \cite{grinold1999} and the surrounding literature.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Notation}
-For the most part, we adopt our own notation, which slightly differs from the set up presented by \cite{grinold1999}. For bookkeeping purposes, we now provide a (non-exhaustive) list of some of the main notation that are used in this work, but not registered anywhere else.
-\begin{itemize}
-    \item We let $[N] := \{1,\dots,N\}$ for any positive integer $N > 0$.
-    \item \textcolor{red}{TODO: add more items}
-\end{itemize}
+In this work, we adopt our own notation, which differs slightly from the set up presented by \cite{grinold1999}. For bookkeeping purposes, we now introduce some of the key notation that will be used throughout this work.
+
+\paragraph{Financial investments.} We let $\mathbb{I}$ denote the space (or universe) of investments and $\mathcal{I} \in \mathbb{I}$ denote an individual investment. Example of investments include both single assets $\mathcal{A} \in \mathbb{I}$ and a weighted collection of assets $\mathcal{P} \in \mathbb{I}$, otherwise known as a portfolio. Note that there is a distinction between whether an asset is long or short. That is, a long position on a particular asset represents a different investment than the corresponding short position. A similar distinction holds for assets within a portfolio.
+
+\paragraph{Finite set of investments.} It is often the case that we are only interested in some subset of $\mathbb{I}$. One notable subset is the space of investments spanned by a finite set of assets $\mathbb{A}_N = \{\mathcal{A}_1, \dots, \mathcal{A}_N\} \subset \mathbb{I}$, where $N$ is the number of assets. We denote such a space by the set $\mathbb{I}_{N} \subset \mathbb{I}$. Notably, we can identify each possible investment in this space with an $N$-dimensional weight vector $\mathbf{h} = (h^{(1)}, \dots, h^{(N)}) \in \mathbb{R}^N$, where each component $h^{(n)} \in \mathbb{R}$ controls the weight associated with the asset $\mathcal{A}_n$ for $n \in [N] := \{1,\dots,N\}$. Note that these weight components can either be positive (for a long position) or negative (for a short position). \textcolor{red}{TODO: Do we need constraints on h? Explain what fully invested means.}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Background concepts}
 The goal of this section is to highlight some of the core conventions and ideas that are often present in the finance literature.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Returns}
-The return of an investment is often reported in the percentage range. That is, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the proportional change in profit). Concretely, suppose we have an asset $\mathcal{A}$ whose value is given by $V_{t_0}(\mathcal{A}) \in \mathbb{R}$ at time $t_0$ and $V_T(\mathcal{A}) \in \mathbb{R}$ at some future time $T$, then the return of this stock at this latest time is given by
+The return of an investment is often reported in the percentage range. That is, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the proportional change in profit). Concretely, suppose we have an investment $\mathcal{I} \in \mathbb{I}$ whose value is given by $v_{t_0}(\mathcal{I}) \in \mathbb{R}$ at time $t_0$ and $v_T(\mathcal{I}) \in \mathbb{R}$ at some future time $t$, then the return of this investment at this latest time is given by
 \begin{equation}
-    R_T(\mathcal{A}) = \frac{V_T(\mathcal{A}) - V_{t_0}(\mathcal{A})}{V_{t_0}(\mathcal{A})} \in \mathbb{R}.
+    r_t(\mathcal{I}) = \frac{v_t(\mathcal{I}) - v_{t_0}(\mathcal{I})}{v_{t_0}(\mathcal{I})} \in \mathbb{R}.
     \label{eqn:return}
 \end{equation}
-Notice that this number tends to infinity when the initial value approaches zero (i.e.\ in the limit we can get infinite return without putting up any prior investment).
+Notice that this number tends to infinity when the initial value approaches zero (i.e.\ in the limit we are getting infinite return from a prior investment of nothing).
+
+\begin{remark}
+	[Other value streams] In practice, one must also account for other profits gained by holding onto the investment in equation \eqref{eqn:return}. For example, one might also include gains from dividends. Out of convenience, we ignore subtle technicalities such as this.
+\end{remark}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Everything is relative}
-Performance assessment is traditionally defined on a relative basis. That is, one typically computes the performance of a financial strategy in comparison to another one. More precisely, we are often interested in the relative (or excess) return of an investment,
+Performance assessment is traditionally defined on a relative basis. That is, one typically computes the performance of an investment in comparison to another one. More precisely, we are often interested in the relative return of an investment,
 \begin{equation}
-    \mathcal{R}_T := R_T(\mathcal{A}) - R_T(\mathcal{B}),
+    R_t(\mathcal{I}, \mathcal{B}) := r_t(\mathcal{I}) - r_t(\mathcal{B}),
     \label{eqn:relative_return}
 \end{equation}
-where $R_T(\mathcal{A})$ and $R_T(\mathcal{B})$ denotes the return from an asset $\mathcal{A}$ and benchmark $\mathcal{B}$ at time $T$, respectively. Practitioners often set this benchmark rate to either the risk-free rate or the market rate.
+where $r_t(\mathcal{I})$ and $r_t(\mathcal{B})$ denotes the return from an investment $\mathcal{I} \in \mathbb{I}$ and benchmark $\mathcal{B} \in \mathbb{I}$, at time $t > 0$, respectively. Practitioners often set this benchmark rate to either the risk-free rate or the market rate. Typically, when the risk-free rate is used, then the relative return is referred to as the excess return. Otherwise, when this benchmark is set more generally, then the corresponding relative return is sometimes referred to as the active return.
 
-\paragraph{Risk-free rate} The risk-free rate refers to the (hypothetical) minimum rate of return that one might desire from an investment. Typically, this rate is set to the return of a financial product whose risk is minimal\footnote{Ideally, one would like to consider a zero risk investment---although realistically there is always a risk associated with any investment.}. In practice, it is common to see this rate being set to the return of the US Treasury bill or a long-term government bond yield.
+\paragraph{Risk-free rate} The risk-free rate, $r_t(\mathcal{B}^{\text{free}})$, refers to the (hypothetical) minimum rate of return that one might desire from an investment. Typically, this rate is set to the return of a financial product whose risk is minimal\footnote{Ideally, one would like to consider a zero risk investment---although realistically there is always a risk associated with any investment.}. In practice, it is common to see this rate being set to the return of some Treasury bill (T-bill) or a long-term government bond yield.
 
-\paragraph{Market rate} The market rate usually refers to the return achieved by a financial product that tries to match the market as a whole (or at least some subset of it). This market portfolio is usually constructed by taking all of the assets in the desired market and then weighting them according to their value (i.e.\ their market capitilisation).
+\paragraph{Market rate} The market rate, $r_t(\mathcal{B}^{\text{market}})$, usually refers to the return achieved by a financial product that tries to match the market as a whole (or at least some subset of it). This market portfolio is usually constructed by taking all of the assets in the desired market and then weighting them according to their market capitilisation.
+
+\begin{remark}
+	[Special case] Note that we can recover the original notion of return \eqref{eqn:return} if we set our benchmark to the empty investment.
+\end{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The meaning of risk}
+Following \cite{grinold1999}, the risk associated with an investment is defined as the standard deviation of its return. More specifically, the risk associated with an investment $\mathcal{I} \in \mathbb{I}$, at a time $t > 0$, is given by
+\begin{equation}
+	\text{Risk}[\mathcal{I}] := \text{Std}[r_t(\mathcal{I})] = \sqrt{\mathbb{V}\text{ar}[r_t(\mathcal{I})]}.
+\end{equation}
+Similarly, the risk of the active return $R_t$ (i.e.\ the return relative to some benchmark $\mathcal{B} \in \mathbb{I}$) is given by 
+\begin{equation}
+	\text{Risk}[(\mathcal{I}, \mathcal{B})] := \text{Std}[R_t(\mathcal{I}, \mathcal{B})] = \sqrt{\mathbb{V}\text{ar}[R_t(\mathcal{I}, \mathcal{B})]}.
+\end{equation}
+This latter risk is sometimes referred to as the active risk or the tracking error.
+
+\paragraph{Other measures of risk} As discussed by \citet[Part 1, Chapter 3]{grinold1999}, there are many possible alternatives to the standard deviation as a notion of risk. Although empirically, there does not seem to be much to gain performance-wise by exploring these alternatives.
+
+\paragraph{Systematic and idiosyncratic risk} \textcolor{red}{TODO:add}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The nature of time}
 The distinction between an ex-ante (before the event) approach and an ex-post (after the event) approach is often very subtle in the finance literature. For example, one might take an ex-ante approach when one is interested in forecasting and making predictions of the future. In contrast, one might take an ex-post approach in the performance assessment setting, where one is interested in assessing the quality\footnote{Here the term quality is defined in the philosophical sense. In general, it is very hard to actually quantify what distinguishes a skillful investor and a lucky one.} of a strategy or a portfolio manager.
 
-\paragraph{Risk analysis} A core problem in asset management is concerned with the quantification of risk. It is important to note that one is interested in estimating risk in both the ex-ante and ex-post setting. In the ex-ante setting, we are interested estimating risk in order to incorporate it into our active decision-making. Whilst, in the ex-post setting, we are interested in assessing risk in order to both assess the realised performance and to identify the main drivers of risk (after the fact).
+\paragraph{Risk analysis} A core problem in asset management is concerned with the quantification of risk. It is important to note that one is interested in estimating risk in both the ex-ante and ex-post setting. In the ex-ante setting, we are interested estimating risk in order to incorporate it into our active decision-making. Whilst, in the ex-post setting, we are interested in assessing risk in order to identify its main active drivers and also to properly assess the realised performance.
 
-\paragraph{Information set} We denote the information set at time $t$ by $I_t \in \mathbb{I}$, where $\mathbb{I}$ denotes the set of all possible information sets. Confusingly, we allow this information set to be defined ambiguously in order to accommodate for both the ex-ante and ex-post setting. More specifically, in the ex-ante (or ex-post) setting, $I_t$ denotes the information set containing all of the information available at the beginning (or end) of time $t$. This convention is convenient from a writing perspective as it covers these two different temporal settings simultaneously, although it is definitely a confusing from a reader perspective who could easily be misled.
+\paragraph{Information set} We denote the historical information set, at time $t > 0$, by $H_t \in \mathbb{H}$, where $\mathbb{H}$ denotes the set of all possible historical information sets. Confusingly, some authors abuse the notation of the historical information set and allow it to be defined ambiguously in order to accommodate for both the ex-ante and ex-post setting. More specifically, in the ex-ante (or ex-post) setting, some authors let $H_t$ denote the information set containing all of the information available at the beginning (or end) of time $t$, respectively. This convention is convenient from a writing perspective as it covers both of these temporal settings simultaneously. On the other hand, it is definitely confusing from a reader perspective who could easily be misled. Despite this weakness, we will also follow this convention as it allows for easier comparisons between this document and other related works.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Garbage in, garbage out}
-A central tenet that is echoed throughout the book by \cite{grinold1999} is  the idea that the ability to identify and exploit ``superior information'' is what separates a good active manager from a bad one. In other words, to generate excess returns (i.e.\ to beat a benchmark), one needs to be diligent in both their ability to collect useful information and their ability to use it effectively. Most of the work presented by \cite{grinold1999} focusses on addressing the latter problem. We will cover a selection of these ideas in the following sections \textcolor{red}{TODO:link}. The former problem, however, is a practical challenge that remains largely subjective and up for debate. Regardless of how one approaches this information retrieval problem, one inevitably will fall upon the well-know adage: ``garbage in, garbage out''. That is, our inability to identify information of a `reasonable' quality will, more often than lot, lead to losses and failures. Therefore, it remains an important and unquestionable part of asset management, that one must aspire to collect high quality data in order to make better decisions.
+A central tenet that is echoed throughout the book by \cite{grinold1999} is the idea that the ability to identify and exploit ``superior information'' is what separates a good active manager from a bad one. In other words, to generate excess returns, one needs to be diligent in both their ability to collect useful information and their ability to use it effectively. Most of the work presented by \cite{grinold1999} focusses on addressing the latter problem. We will cover a selection of these ideas in the following sections \textcolor{red}{TODO:link}. The former problem, however, is a practical challenge that is much more an art than a science. Regardless of how one approaches this information retrieval problem, one inevitably will fall upon the well-know adage: ``garbage in, garbage out''. That is, our inability to identify information of a `reasonable' quality will, more often than not, lead to useless output. Therefore, it remains an important and unquestionable part of asset management, that one must aspire to collect high quality data in order to facilitate better decision making.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelling the returns}
-One of the main problems in active portfolio management is concerned with the modelling of excess returns \eqref{eqn:relative_return}. In particular, one often tries to model the excess returns of an asset $\mathcal{A}$, at time $t > 0$, relative to a benchmark $\mathcal{B}$, as a function of the information set:
+One of the main problems in active portfolio management is concerned with the modelling of excess returns \eqref{eqn:relative_return}. In particular, one often tries to model the excess returns of an investment $\mathcal{I} \in \mathbb{I}$, at time $t > 0$, as a function of the information set:
 \begin{equation}
-    \mathcal{R}_t = f(I_t) + \epsilon_t,
+    R_t(\mathcal{I}, \mathcal{B}^{\text{free}}) = f_t(H_t) + \epsilon_t,
     \label{eqn:return_model}
 \end{equation}
-where $I_t \in \mathbb{I}$ denotes the $t$-th information set, $f: \mathbb{I} \rightarrow \mathbb{R}$ denotes the modelling function (for the excess returns) and $\epsilon_t \in \mathbb{R}$ denotes the random residual. In the following, we list some notable ideas that underpin this general model for excess returns \eqref{eqn:return_model}.
+where $H_t \in \mathbb{I}$ denotes the $t$-th information set, $f_t: \mathbb{H} \rightarrow \mathbb{R}$ denotes the modelling function and $\epsilon_t \in \mathbb{R}$ denotes the random residual. In the following, we list some notable ideas that underpin this general model for excess returns \eqref{eqn:return_model}.
 
 \begin{itemize}
-    \item \textbf{Dependence on investor.} Notably, the form of the information set $I_t$ and function $f$ is something that is specified by the user; the residual $\epsilon_t$ denotes everything else that is left over. On practical level, this means that different investors can obtain different results even if they adopt the same modelling function $f$. 
-    \item \textbf{Information uncertainty.} Formally, the information set $I_t$ is treated as a random variable. In particular, the randomness of $I_t$ stems from the intrinsic uncertainty that naturally arises from the collection, retrieval and processing of real-world data. 
-    \item \textbf{Residual uncertainty.} The residual $\epsilon_t = \mathcal{R}_t - f(I_t)$ models the remaining discrepancy that is not accounted for by the ``explained'' part of the excess returns $f(I_t)$. Note here that the residual $\epsilon_t$ is a random variable because both $\mathcal{R}_t$ and $I_t$ are random variables.
+    \item \textbf{Dependence on investor.} Notably, the form of the information set $H_t$ and function $f_t$ is something that is specified by the user; the residual $\epsilon_t$ denotes everything else that is left over. On practical level, this means that different investors can obtain different results even if they adopt the same modelling function $f_t$. 
+    \item \textbf{Information uncertainty.} Formally, the information set $H_t$ is treated as a random variable. In particular, the randomness of $I_t$ stems from the intrinsic uncertainty that naturally arises from the collection, retrieval and processing of real-world data. 
+    \item \textbf{Residual uncertainty.} The residual $\epsilon_t = R_t - f_t(H_t)$ models the remaining discrepancy that is not accounted for by the ``explained'' part of the excess returns $f_t(H_t)$. Note here that the residual $\epsilon_t$ is a random variable because both $R_t$ and $H_t$ are random variables.
+    \item \textbf{Space of models.} The modelling function $f_t: \mathbb{H} \rightarrow \mathbb{R}$ is assumed to live in some space $\mathbb{M}$. For example, much of the earlier work in the space assumed that $\mathbb{M}$ was the space of linear functions. More recently, there has been a growing interest in using machine learning methods in order to learn more expressive non-linear models.
 \end{itemize}
-
-Although one might attempt to directly model the excess returns, it is perhaps more common in the literature to try and model the expectation of the excess returns:
-\begin{equation}
-    \bar{\mathcal{R}_t} := \mathbb{E}[\mathcal{R}_t] = \mathbb{E}[f(I_t)] + \mathbb{E}[\epsilon_t].
-\end{equation}
-The expectation here is over all of the relevant randomness in the world. More precisely, this expectation is over the random information set $I_t$ and the random residual $\epsilon_t$. Instead of relying on \eqref{eqn:return_model} to model the expected excess returns, practitioner often resort to an estimate of the following form:
-\begin{equation}
-    \bar{\mathcal{R}_t} = g(I_t) + \eta_t,
-    \label{eqn:expected_return_model}
-\end{equation}
-where $g: \mathbb{I} \rightarrow \mathbb{R}$ denotes the modelling function (for the expected excess returns) and $\eta_t \in \mathbb{R}$ denotes the corresponding residual. Mathematically, this latter model \eqref{eqn:expected_return_model} is equivalent to the former model \eqref{eqn:return_model} but with a different target. Notably, in the latter case the randomness in the residual $\eta_t = \bar{\mathcal{R}}_t - g(I_t)$ stems solely from the randomness in $I_t$ as $\bar{\mathcal{R}_t}$ is a constant.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Machine learning}
-\textcolor{red}{TODO:just drafted some preliminary ideas.}
-\\ \\
-Given a fixed form for the information set $I_t$, it is tempting to treat \eqref{eqn:return_model} and \eqref{eqn:expected_return_model} as a classic machine learning problem. That is, we select the function $f$ or $g$ from a particularly expressive family of models $\mathbb{M}$ and minimise some reasonable loss function in order to find the ``best'' model. 
+\subsection{Factor models}
+Early work on modelling returns centred on the setting where the space of models $\mathbb{M}$ was the space of linear models. The corresponding information sets $H_t$ at each time is then composed of features that we think are relevant to the excess returns of our investment of interest $\mathcal{I} \in \mathbb{I}$. Formally speaking, these features are commonly referred to as the factor exposures of our investment, whilst the resulting linear model are referred to as a factor model. We now present a targetted overview of factor models. Following the example of existing work, we focus our of attention on the realistic setting where our the space of investments $\mathbb{I}_N$ is determined by $N$ assets $\mathbb{A}_N = \{\mathcal{A}_1, \dots, \mathcal{A}_N\}$.
 
-\paragraph{Regression on the excess returns} To find the best model for \eqref{eqn:return_model}, we just minimise some discrepancy $\mathcal{D}$ between the distribution of excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated discrepancy:
+\subsubsection{Multifactor model} For each asset $\mathcal{A}_n \in \mathbb{A}_N$, we assume that its excess returns can be modelled according to the following linear model:
 \begin{equation}
-    f^* \in \argmin_{f \in \mathbb{M}} \int_{t \in \mathbf{T}} \mathcal{D}(\mathcal{R}_t, f(I_t)) dt,
+	R_t(\mathcal{A}_n, \mathcal{B}^{\text{free}}) = \sum_{k=1}^K X_t^{(n, k)} b_t^{(k)} + u^{(n)}_t,
+	\label{eqn:multifactor_model_asset}
 \end{equation}
-for some appropriate time horizon $\mathbf{T}$.
+for $n \in [N]$ and $t>0$. Notationally, this factor model consists of $K$ factors that have been chosen (or estimated) by the practitioner. The exposure of the $n$-th asset to the $k$-th factor is given by the value $X_t^{{(n, k)}} \in \mathbb{R}$; the $k$-th factor return is given by the value $b_t^{(k)} \in \mathbb{R}$; and the $n$-th stock return that cannot be explained by the factors is given by the term $u_t^{(n)} \in \mathbb{R}$.
 
-\paragraph{Regression on the expected excess returns} To find the best model for \eqref{eqn:expected_return_model}, we just minimise some scoring function $S$ between the expected excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated score:
+Given a portfolio $\mathcal{I} \in \mathbb{I}_N$, represented by a weight vector $\mathbf{h} \in \mathbb{R}^N$, we can use \eqref{eqn:multifactor_model_asset} in order to obtain the following equation: 
+\begin{align}
+	R_t(\mathcal{I}, \mathcal{B}^{\text{free}}) 
+	&= \sum_{n=1}^N h^{(n)} R_t(\mathcal{A}_n, \mathcal{B}^{\text{free}})
+	\\
+	&= \sum_{k=1}^K \left(\sum_{n=1}^N h^{(n)} X_t^{(n, k)} \right) b_t^{(k)} + \sum_{n=1}^N h^{(n)} u^{(n)}_t.
+	\label{eqn:multifactor_model}
+\end{align}
+This model can be more compactly is matrix form:
 \begin{equation}
-    g^* \in \argmin_{g \in \mathbb{M}} \int_{t \in \mathbf{T}} S(g(I_t), \bar{\mathcal{R}}_t) dt,
+	R_t(\mathcal{I}, \mathcal{B}^{\text{free}}) = \mathbf{h}^T (X_t \mathbf{b}_t + \mathbf{u}_t).
 \end{equation}
-for some appropriate time horizon $\mathbf{T}$.
-\\ \\
-Both of these models rely on quantities or things we might not be able to compute or optimise in practice. They are just equations to keep in mind. 
+The expectation and variance is then given by:
+\begin{align}
+	\mathbb{E}[R_t(\mathcal{I}, \mathcal{B}^{\text{free}})] &= \mathbf{h}^T (\mathbb{E}[X_t \mathbf{b}_t] + \mathbb{E}[\mathbf{u}_t]),
+	\\
+	\mathbb{V}\text{ar}[R_t(\mathcal{I}, \mathcal{B}^{\text{free}})] 
+	&= \mathbf{h}^T \mathbb{V}\text{ar}[X_t \mathbf{b}_t + \mathbf{u}_t] \mathbf{h}
+	\\
+	&= \mathbf{h}^T \left(\mathbb{V}\text{ar}[X_t \mathbf{b}_t] + 2\mathbb{C}\text{ov}[X_t \mathbf{b}_t, \mathbf{u}_t] + \mathbb{V}\text{ar}[\mathbf{u}_t]\right) \mathbf{h}.
+\end{align}
+
+
+\paragraph{Choosing the factors} In general, the $K$ factors in the linear model \eqref{eqn:multifactor_model_asset} are chosen either manually or systematically based on a mixture of domain expertise and historical data analysis. There is no consensus on what the best factors to use are. In fact, there is a whole zoo of factors which have been suggested by different authors \textcolor{red}{TODO:ref}. Notably, the most famous factor models are the ones proposed by \cite{fama1993jofe} etc. \textcolor{red}{TODO:add more references}.
+
+\paragraph{Systematic and idiosyncratic part} Mathematically, the multifactor model \eqref{eqn:multifactor_model} consists of two parts: the systematic part and the idiosyncratic part. The systematic part is addressed by the first term, which tries to describe... \textcolor{red}{TODO:finish}
+
+\paragraph{Correlation} \textcolor{red}{TODO: discuss correlation assumption between residuals}
+
+\paragraph{Estimating the unknown parameters} The main parameters of the linear model \eqref{eqn:multifactor_model_asset} is the exposure matrix $X_t \in \mathbb{R}^{N \times K}$ and the coefficient vector $\mathbf{b}_t = (b^{(1)}_t, \dots, b_t^{(N)}) \in \mathbb{R}^N$. In general, the exposures are typically assumed to be given, whilst the coefficients are assumed to be fitted using linear regression or some (robust) variant thereof. There are some cases however where both the exposure matrix and coefficients are estimated jointly, or even cases where the coefficient vector is given and the exposure matrix has to be estimated. \textcolor{red}{TODO: elaborate and add ref}. 
+
+\subsubsection{Single factor model}
+When $K=1$, we get the single factor model
+\begin{equation}
+	R_t(\mathcal{A}_n, \mathcal{B}^{\text{free}}) = X_t^{(n)} b_t + u^{(n)}_t,
+\end{equation}
+for assets $n \in [N]$ and time $t>0$. 
+
+\paragraph{CAPM} A special case of the single factor model is the Capital Asset Pricing Model (CAPM) where we make the following assumptions:
+\begin{enumerate}
+	\item All the exposures are equal to the excess returns of the market: $X_t^{(n)} = R_t(\mathcal{B}^{\text{market}}, \mathcal{B}^{\text{free}})$ for $n \in [N]$.
+	\item The expectation of the residuals are zero: $\mathbb{E}[u^{(n)}_t] = 0$ for $n \in [N]$.
+	\item The residuals are uncorrelated with each other: $\mathbb{E}[u^{(n)}_t u^{(n')}_t] = 0$ for $n \neq n' \in [N]$.
+\end{enumerate}
+Notably, these assumptions imply that the expectation of the excess returns of an investment $\mathcal{I} \in \mathbb{I}_N$, associated with a weight vector $\mathbf{h} \in \mathbb{R}^M$, takes the form
+\begin{equation}
+	\mathbb{E}[R_t(\mathcal{I}, \mathcal{B}^{\text{free}})] = \left(\sum_{n=1}^N h^{(n)}\right) \cdot b_t \cdot \mathbb{E}[R_t(\mathcal{B}^{\text{market}}, \mathcal{B}^{\text{free}})]
+\end{equation}
+and the variance of this investment is given by
+\begin{equation}
+	\mathbb{V}\text{ar}[R_t(\mathcal{I}, \mathcal{B}^{\text{free}})] = \left(\sum_{n=1}^N h^{(n)}\right) \cdot b_t \cdot \mathbb{E}[R_t(\mathcal{B}^{\text{market}}, \mathcal{B}^{\text{free}})].
+\end{equation}
+Intuitively, the CAPM suggest that the performance of an investment, relative to the market, is governed by its weight vector $\mathbf{h} \in \mathbb{R}^M$ and its ``beta'' parameter $b_t \in \mathbb{R}$. The weight vector can be controlled by the practitioner. In contrast, the beta parameter denotes the sensitivity of each asset to the market and is something that is intrinsic to the asset itself. Intuitively, the higher the beta, the higher the risk
+%Although one might attempt to directly model the excess returns, it is perhaps more common in the literature to try and model the expectation of the excess returns:
+%\begin{equation}
+%    \bar{\mathcal{R}_t} := \mathbb{E}[\mathcal{R}_t] = \mathbb{E}[f(H_t)] + \mathbb{E}[\epsilon_t].
+%\end{equation}
+%The expectation here is over all of the relevant randomness in the world. More precisely, this expectation is over the random information set $I_t$ and the random residual $\epsilon_t$. Instead of relying on \eqref{eqn:return_model} to model the expected excess returns, practitioner often resort to an estimate of the following form:
+%\begin{equation}
+%    \bar{\mathcal{R}_t} = g(H_t) + \eta_t,
+%    \label{eqn:expected_return_model}
+%\end{equation}
+%where $g: \mathbb{H} \rightarrow \mathbb{R}$ denotes the modelling function (for the expected excess returns) and $\eta_t \in \mathbb{R}$ denotes the corresponding residual. Mathematically, this latter model \eqref{eqn:expected_return_model} is equivalent to the former model \eqref{eqn:return_model} but with a different target. Notably, in the latter case the randomness in the residual $\eta_t = \bar{\mathcal{R}}_t - g(I_t)$ stems solely from the randomness in $I_t$ as $\bar{\mathcal{R}_t}$ is a constant.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Machine learning}
+%\textcolor{red}{TODO:just drafted some preliminary ideas.}
+%\\ \\
+%Given a fixed form for the information set $H_t$, it is tempting to treat \eqref{eqn:return_model} and \eqref{eqn:expected_return_model} as a classic machine learning problem. That is, we select the function $f$ or $g$ from a particularly expressive family of models $\mathbb{M}$ and minimise some reasonable loss function in order to find the ``best'' model. 
+%
+%\paragraph{Regression on the excess returns} To find the best model for \eqref{eqn:return_model}, we just minimise some discrepancy $\mathcal{D}$ between the distribution of excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated discrepancy:
+%\begin{equation}
+%    f^* \in \argmin_{f \in \mathbb{M}} \int_{t \in \mathbf{T}} \mathcal{D}(\mathcal{R}_t, f(H_t)) dt,
+%\end{equation}
+%for some appropriate time horizon $\mathbf{T}$.
+%
+%\paragraph{Regression on the expected excess returns} To find the best model for \eqref{eqn:expected_return_model}, we just minimise some scoring function $S$ between the expected excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated score:
+%\begin{equation}
+%    g^* \in \argmin_{g \in \mathbb{M}} \int_{t \in \mathbf{T}} S(g(H_t), \bar{\mathcal{R}}_t) dt,
+%\end{equation}
+%for some appropriate time horizon $\mathbf{T}$.
+%\\ \\
+%Both of these models rely on quantities or things we might not be able to compute or optimise in practice. They are just equations to keep in mind. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Mean-variance trade-off}
-\section{Cross-sectional vs time series}
-\section{Linear vs non-linear}
+%\section{Mean-variance trade-off}
+%\section{Cross-sectional vs time series}
+%\section{Linear vs non-linear}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \bibliographystyle{plainnat}

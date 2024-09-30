@@ -1,4 +1,7 @@
 \backcite {grinold1999}{{1}{(document)}{Doc-Start}}
 \backcite {grinold1999}{{1}{1}{section.1}}
-\backcite {grinold1999}{{2}{2.4}{subsection.2.4}}
-\backcite {grinold1999}{{2}{2.4}{subsection.2.4}}
+\backcite {grinold1999}{{2}{2.3}{subsection.2.3}}
+\backcite {grinold1999}{{3}{2.3}{section*.5}}
+\backcite {grinold1999}{{3}{2.5}{subsection.2.5}}
+\backcite {grinold1999}{{3}{2.5}{subsection.2.5}}
+\backcite {fama1993jofe}{{5}{3.1.1}{section*.9}}
