@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex factor"] 1727798515.544 "factor.aux" "factor.bbl" "factor" 1727798636.69862 0
+["bibtex factor"] 1727874206.63787 "factor.aux" "factor.bbl" "factor" 1727874211.98122 0
   "./factor.bib" 1727423461 9376 25ae9fd9e17901c46409c18dee0454e8 ""
   "c:/texlive/2024/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1726352771 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "factor.aux" 1727798634 6757 160fb3f2f5222ade820a20361e5ff1d4 "pdflatex"
+  "factor.aux" 1727874209 6640 501b4712116ef17b180527933b424116 "pdflatex"
   (generated)
   "factor.bbl"
   "factor.blg"
   (rewritten before read)
-["pdflatex"] 1727798632.04459 "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" "factor.pdf" "factor" 1727798636.6992 0
-  "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" 1727798630 33412 483e254bccd90b6ad1eaab8832046ea6 ""
+["pdflatex"] 1727874207.50596 "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" "factor.pdf" "factor" 1727874211.98171 0
+  "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" 1727874163 33816 8fd535badf2006e9f0b9d72146060a03 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1726351564 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1726352002 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1726351809 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -49,7 +49,6 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb" 1726351235 32166 b0c356b15f19587482a9217ce1d8fa67 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1726351235 30251 6afa5cb1d0204815a708a080681d4674 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1726351235 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb" 1726351235 37166 8ab3487cbe3ab49ebce74c29ea2418db ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1726351235 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb" 1726351235 36912 b448ef9ad9d7228ec3c6e71005136d55 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1726351235 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -135,11 +134,11 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1726354131 5513072 9c1fc38a7d970efa00aeae6b397bfedd ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1726354494 8221515 55d6b7e21f7bd8562963645243f96ed2 ""
   "c:/texlive/2024/texmf.cnf" 1726354098 713 e69b156964470283e0530f5060668171 ""
-  "factor.aux" 1727798634 6757 160fb3f2f5222ade820a20361e5ff1d4 "pdflatex"
-  "factor.bbl" 1727798516 1021 6dcda21916c0f61f5d56ec78fe7acbe8 "bibtex factor"
-  "factor.brf" 1727798634 479 f7942452b5d98020106bea2f9b8dfd17 "pdflatex"
-  "factor.out" 1727798634 2423 f611aa008605df1a7a8e6564f3831269 "pdflatex"
-  "factor.tex" 1727798630 33412 483e254bccd90b6ad1eaab8832046ea6 ""
+  "factor.aux" 1727874209 6640 501b4712116ef17b180527933b424116 "pdflatex"
+  "factor.bbl" 1727874207 1021 6dcda21916c0f61f5d56ec78fe7acbe8 "bibtex factor"
+  "factor.brf" 1727874209 474 b7ca444da033d6801a7b6aeb9c4510b6 "pdflatex"
+  "factor.out" 1727874209 2423 f611aa008605df1a7a8e6564f3831269 "pdflatex"
+  "factor.tex" 1727874163 33816 8fd535badf2006e9f0b9d72146060a03 ""
   (generated)
   "factor.aux"
   "factor.brf"
