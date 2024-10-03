@@ -1,22 +1,73 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[Axioma(2007)]{axioma2007}
+Axioma.
+\newblock Axioma robust risk model version 4 handbook.
+\newblock October 2007.
+
+\bibitem[Carhart(1997)]{carhart1997jf}
+Mark~M. Carhart.
+\newblock On persistence in mutual fund performance.
+\newblock \emph{The Journal of Finance}, 52\penalty0 (1):\penalty0 57--82, 1997.
+
+\bibitem[Fama(1970)]{fama1970jf}
+Eugene~F. Fama.
+\newblock Efficient capital markets: {{A}} review of theory and empirical work.
+\newblock \emph{The Journal of Finance}, 25\penalty0 (2):\penalty0 383--417, 1970.
+
 \bibitem[Fama and French(1993)]{fama1993jofe}
 Eugene~F. Fama and Kenneth~R. French.
 \newblock Common risk factors in the returns on stocks and bonds.
 \newblock \emph{Journal of Financial Economics}, 33\penalty0 (1):\penalty0 3--56, February 1993.
-\newblock ISSN 0304-405X.
-\newblock \doi{10.1016/0304-405X(93)90023-5}.
-\newblock URL \url{https://www.sciencedirect.com/science/article/pii/0304405X93900235}.
+
+\bibitem[Fama and French(2015)]{fama2015jofe}
+Eugene~F. Fama and Kenneth~R. French.
+\newblock A five-factor asset pricing model.
+\newblock \emph{Journal of Financial Economics}, 116\penalty0 (1):\penalty0 1--22, April 2015.
+
+\bibitem[Feng et~al.(2020)Feng, Giglio, and Xiu]{feng2020jf}
+Guanhao Feng, Stefano Giglio, and Dacheng Xiu.
+\newblock Taming the factor zoo: {{A}} test of new factors.
+\newblock \emph{The Journal of Finance}, 75\penalty0 (3):\penalty0 1327--1370, 2020.
+
+\bibitem[Giglio et~al.(2022)Giglio, Kelly, and Xiu]{giglio2022arfe}
+Stefano Giglio, Bryan Kelly, and Dacheng Xiu.
+\newblock Factor models, machine learning, and asset pricing.
+\newblock \emph{Annual Review of Financial Economics}, 14\penalty0 (Volume 14, 2022):\penalty0 337--368, November 2022.
 
 \bibitem[Grinold and Kahn(1999)]{grinold1999}
 Richard~C. Grinold and Ronald~N. Kahn.
-\newblock \emph{Active {Portfolio} {Management} : {A} quantative approach for producing superior returns and selecting superior money managers}.
-\newblock McGraw Hill, New York, NY, 2nd edition edition, November 1999.
-\newblock ISBN 978-0-07-024882-3.
+\newblock \emph{Active {{Portfolio Management}} : {{A}} Quantative Approach for Producing Superior Returns and Selecting Superior Money Managers}.
+\newblock McGraw Hill, November 1999.
+
+\bibitem[Gu et~al.(2020)Gu, Kelly, and Xiu]{gu2020trofs}
+Shihao Gu, Bryan Kelly, and Dacheng Xiu.
+\newblock Empirical asset pricing via machine learning.
+\newblock \emph{The Review of Financial Studies}, 33\penalty0 (5):\penalty0 2223--2273, May 2020.
+
+\bibitem[Malkiel(2003)]{malkiel2003jep}
+Burton~G. Malkiel.
+\newblock The efficient market hypothesis and its critics.
+\newblock \emph{Journal of Economic Perspectives}, 17\penalty0 (1):\penalty0 59--82, March 2003.
+
+\bibitem[Markowitz(1952)]{markowitz1952jf}
+Harry Markowitz.
+\newblock Portfolio selection.
+\newblock \emph{The Journal of Finance}, 7\penalty0 (1):\penalty0 77--91, 1952.
+
+\bibitem[Ross(1976)]{ross1976joet}
+Stephen~A Ross.
+\newblock The arbitrage theory of capital asset pricing.
+\newblock \emph{Journal of Economic Theory}, 13\penalty0 (3):\penalty0 341--360, December 1976.
+
+\bibitem[Sharpe(1964)]{sharpe1964jf}
+William~F. Sharpe.
+\newblock Capital asset prices: {{A}} theory of market equilibrium under conditions of risk.
+\newblock \emph{The Journal of Finance}, 19\penalty0 (3):\penalty0 425--442, 1964.
 
 \end{thebibliography}
