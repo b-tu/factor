@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex factor"] 1727969858.70743 "factor.aux" "factor.bbl" "factor" 1727970933.96812 0
+["bibtex factor"] 1728029174.56725 "factor.aux" "factor.bbl" "factor" 1728032217.10285 0
   "./factor.bib" 1727892398 4737 58a16c98896908a2f27ab7e181c39bca ""
   "c:/texlive/2024/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1726352771 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "factor.aux" 1727970932 8986 5902db91a2c15a474dfa5e8f30153d6d "pdflatex"
+  "factor.aux" 1728032215 8982 ca434442ea5f999f873a80c54428b75f "pdflatex"
   (generated)
   "factor.bbl"
   "factor.blg"
   (rewritten before read)
-["pdflatex"] 1727970929.70281 "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" "factor.pdf" "factor" 1727970933.96863 0
-  "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" 1727970928 35247 72c93f4075d38cfc9b0a1f1685a55ce7 ""
+["pdflatex"] 1728032212.46734 "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" "factor.pdf" "factor" 1728032217.10382 0
+  "c:/Users/Ben/Documents/QRT/factor/article/factor.tex" 1728032210 34743 dd6ad8b038764a8dc185c3457b0b1924 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1726351564 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1726352002 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1726351809 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -134,11 +134,11 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1726354131 5513072 9c1fc38a7d970efa00aeae6b397bfedd ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1726354494 8221515 55d6b7e21f7bd8562963645243f96ed2 ""
   "c:/texlive/2024/texmf.cnf" 1726354098 713 e69b156964470283e0530f5060668171 ""
-  "factor.aux" 1727970932 8986 5902db91a2c15a474dfa5e8f30153d6d "pdflatex"
-  "factor.bbl" 1727969859 3177 e243c4fa2f77ca8e120fe741cca38147 "bibtex factor"
-  "factor.brf" 1727970932 1372 343385c677af754b00416e79601d1fc9 "pdflatex"
-  "factor.out" 1727970932 2282 5ceb0bf5627257716656921e80fb83a1 "pdflatex"
-  "factor.tex" 1727970928 35247 72c93f4075d38cfc9b0a1f1685a55ce7 ""
+  "factor.aux" 1728032215 8982 ca434442ea5f999f873a80c54428b75f "pdflatex"
+  "factor.bbl" 1728029175 3177 e243c4fa2f77ca8e120fe741cca38147 "bibtex factor"
+  "factor.brf" 1728032215 1372 edf4ffd0c8b7aec5c537ceaa194493fc "pdflatex"
+  "factor.out" 1728032215 2282 5ceb0bf5627257716656921e80fb83a1 "pdflatex"
+  "factor.tex" 1728032210 34743 dd6ad8b038764a8dc185c3457b0b1924 ""
   (generated)
   "factor.aux"
   "factor.brf"

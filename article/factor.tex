@@ -119,11 +119,11 @@ The goal of this article is to present a focussed and subjective summary on some
 \section{Notation}
 For additional generality, we adopt our own notation in this work, which differs slightly from the notation adopted by \cite{grinold1999}. For bookkeeping purposes, we now highlight some of the key notation that will be used throughout this work.
 
-\paragraph{Space of financial investments.} We let $\mathbb{I}$ denote the space (or universe) of investments. An individual investment will be denoted by $\mathcal{I} \in \mathbb{I}$. Each investment will be assumed to be a comprised of a weighted collection of positions on $N$ unique assets $\mathbb{A} = \{\mathcal{A}_1, \dots, \mathcal{A}_N\} \subset \mathbb{I}$ and cash. More formally, every investment $\mathcal{I}$ can be identified by a weight vector lying in the space
+\paragraph{Space of financial investments.} We let $\mathbb{I}$ denote the space (or universe) of investments. An individual investment will be denoted by $\mathcal{I} \in \mathbb{I}$. Each investment will be assumed to be a comprised of a weighted collection of positions on $N-1$ unique assets $\mathbb{A} = \{\mathcal{A}_1, \dots, \mathcal{A}_{N-1}\} \subset \mathbb{I}$ and cash holding$\mathcal{A}_N := \mathcal{C}$. More formally, every investment $\mathcal{I}$ can be identified by a weight vector 
 \begin{equation}
-	\mathbb{H} := \{(\mathbf{w}, c) := \mathbb{R}^N \times \mathbb{R}: \mathbf{w}^T \mathbf{1}_N + c = 1\},
+	\mathbb{W} := \{\mathbf{w} = (w^{(1)},\dots, w^{(N)}) \in \mathbb{R}^{N+1}: \mathbf{w}^T \mathbf{1}_{N} = 1\},
 \end{equation}
-where $\mathbf{w}$ is the weight vector associated with the $N$ assets and $c$ is weight associated with the cash holding.  Notably, the weight components $w^{(n)}$ can either be positive (for a long position) or negative (for a short position).
+where $\mathbf{1}_N \in \mathbb{R}^{N}$ is a vector of ones. Notably, the weight components $w^{(n)} \in \mathbb{R}$ can either be positive (for a long position) or negative (for a short position). When $w^{(N)} = 0$, the portfolio is said to be fully-invested; when $w^{(N)} = 1$ the portfolio is said to be cash-neutral; when $w^{(1)},...,w^{(N-1)} \geq 0$ the portfolio is said to be long-only.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Background concepts}
 The goal of this section is to highlight some of the core conventions and ideas that are often present in the finance literature.
@@ -131,7 +131,7 @@ The goal of this section is to highlight some of the core conventions and ideas 
 \subsection{Returns}
 The return of an investment is often reported in the percentage range. More precisely, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the relative change in profit). Concretely, suppose we have an investment $\mathcal{I} \in \mathbb{I}$ whose value is given by $v_{t_0}(\mathcal{I}) \in \mathbb{R}$ at time $t_0$ and $v_T(\mathcal{I}) \in \mathbb{R}$ at some future time $t$, then the return of this investment at this latest time is given by
 \begin{equation}
-    R_t(\mathcal{I}) := \frac{v_t(\mathcal{I}) - v_{t_0}(\mathcal{I})}{v_{t_0}(\mathcal{I})} \in \mathbb{R}.
+    R_t^{\text{p}} := R_t(\mathcal{I}) := \frac{v_t(\mathcal{I}) - v_{t_0}(\mathcal{I})}{v_{t_0}(\mathcal{I})} \in \mathbb{R}.
     \label{eqn:return}
 \end{equation}
 Notice that this number tends to infinity when the initial value approaches zero. That is, in the limit we are getting infinite return from a prior investment of nothing.
@@ -144,7 +144,7 @@ Notice that this number tends to infinity when the initial value approaches zero
 \subsection{Everything is relative}
 Performance assessment is traditionally defined on a relative basis. That is, one typically computes the performance of an investment in comparison to another one. Specifically, we are often interested in the return of an investment $\mathcal{I} \in \mathbb{I}$ relative to some benchmark $\mathcal{B} \in \mathbb{I}$:
 \begin{equation}
-    R_t(\mathcal{I}) - R_t(\mathcal{B}).
+    R_t^{\text{p}} - R_t^{\text{b}} := R_t(\mathcal{I}) - R_t(\mathcal{B}).
     \label{eqn:relative_return}
 \end{equation}
 Practitioners often set this benchmark rate to either the risk-free rate or the market rate. Notably, when the risk-free rate is used, this relative return is referred to as the excess return. Otherwise, this relative return is commonly referred to as the active return.
@@ -161,11 +161,11 @@ Practitioners often set this benchmark rate to either the risk-free rate or the 
 \subsection{The meaning of risk}
 Following \cite{grinold1999}, the risk associated with an investment is defined as the standard deviation of its return. More precisely, the risk associated with an investment $\mathcal{I} \in \mathbb{I}$, at a time $t > 0$, is
 \begin{equation}
-	\text{Risk}[\mathcal{I}] := \text{Std}[R_t(\mathcal{I})] = \sqrt{\mathbb{V}\text{ar}[R_t(\mathcal{I})]},
+	\text{Risk}[\mathcal{I}] := \text{Std}[R_t^{\text{p}}] = \sqrt{\mathbb{V}\text{ar}[R_t^{\text{p}}]},
 \end{equation}
 and similarly, the risk of the active return \eqref{eqn:relative_return} is 
 \begin{equation}
-	\text{Risk}[(\mathcal{I}, \mathcal{B})] := \text{Std}[R_t(\mathcal{I}) - R_t(\mathcal{B})] = \sqrt{\mathbb{V}\text{ar}[R_t(\mathcal{I}) - R_t(\mathcal{B})]}.
+	\text{Risk}[(\mathcal{I}, \mathcal{B})] := \text{Std}[R_t^{\text{p}} - R_t^{\text{b}}] = \sqrt{\mathbb{V}\text{ar}[R_t^{\text{p}} - R_t^{\text{b}}]}.
 \end{equation}
 This latter risk is sometimes referred to as the active risk or the tracking error.
 
@@ -192,35 +192,19 @@ The Efficient-Market Hypothesis (EMH) proposed by \cite{fama1970jf} states that 
 \label{sec:mean_variance}
 The goal of Modern Portfolio Theory (MPT) \citep{markowitz1952jf} is to find portfolios which achieves the greatest expected return for a given user-specified risk level. More formally, suppose we have a risk level of $\delta \geq 0$, then the goal of interest is to solve the following mean-variance optimisation problem:
 \begin{align}
-	\max_{(\mathbf{w}, c) \in \mathbb{H}} \mathbf{w}^T \boldsymbol{\mu}_t + c R_t^{\text{rf}}   
+	\max_{\mathbf{w} \in \mathbb{H}} \mathbf{w}^T \boldsymbol{\mu}_t
 	\quad
 	\text{subject to}
 	\quad 
 	\mathbf{w}^T\boldsymbol{\Sigma}_t \mathbf{w} \leq \delta^2,
 	\label{eqn:mean_variance_problem}
 \end{align}
-for any time $t > 0$, where the $\boldsymbol{\mu}_t \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t \in \mathbb{R}^{N \times N}$ denotes the mean and covariance matrix of the returns of the base assets, $\boldsymbol{\mu}_t := \mathbb{E}[\mathbf{R}_t] \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t := \mathbb{V}\text{ar}[\mathbf{R}_t] \in \mathbb{R}^{N \times N}$ where $\mathbf{R}_t = (R_t(\mathcal{A}_1), \dots, R_t(\mathcal{A}_N)) \in \mathbb{R}^N$. Similarly, one can also define the mean-variance optimisation problem for the excess and active returns as well. In particular, the excess return problem is
-\begin{align}
-	\max_{(\mathbf{w}, c) \in \mathbb{H}} \mathbf{w}^T \boldsymbol{\mu}_t + (c - 1) R_t^{\text{rf}}   
-	\quad
-	\text{subject to}
-	\quad 
-	\mathbf{w}^T\boldsymbol{\Sigma}_t \mathbf{w} \leq \delta^2,
-\end{align}
-and the active return problem is
-\begin{align}
-	\max_{(\mathbf{w}, c) \in \mathbb{H}} (\mathbf{w} - \mathbf{w}^b)^T \boldsymbol{\mu}_t + c R_t^{\text{rf}}   
-	\quad
-	\text{subject to}
-	\quad 
-	(\mathbf{w} - \mathbf{w}^b)^T\boldsymbol{\Sigma}_t (\mathbf{w} - \mathbf{w}^b) \leq \delta^2,
-\end{align}
-where $\mathbf{w}^b$ is the weight vector associated with the benchmark $\mathcal{B} \in \mathbb{I}$.
+for any time $t > 0$, where the $\boldsymbol{\mu}_t \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t \in \mathbb{R}^{N \times N}$ denotes the mean and covariance matrix of the returns of the base assets (and cash). That is, $\boldsymbol{\mu}_t := \mathbb{E}[\mathbf{R}_t] \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t := \mathbb{V}\text{ar}[\mathbf{R}_t] \in \mathbb{R}^{N \times N}$ where $\mathbf{R}_t = (R_t(\mathcal{A}_1), \dots, R_t(\mathcal{A}_N)) \in \mathbb{R}^N$. The mean of the cash holding is typically assumed to follow the risk-free rate $\mathbb{E}[\mu_t^{(N)}] = \mathcal{R}_t^{\text{rf}} \in \mathbb{R}$. Moreover, the variance and covariances of the cash holdings is typically assumed to be zero.
 
-\paragraph{Estimating the asset return statistics} One of the key challenges involved with deploying an MPT solution comes from the fact that the mean vector and covariance matrix of interest is unknown in practice and therefore has to be estimated (or predicted) from the available data $\mathcal{D}_t \in \mathbb{D}$. The mean vector has $N$ elements that has to be estimated, whilst the covariance matrix has $\mathcal{O}(N^2)$ number of elements to be estimated. In practice, one does not usually have enough data points at each time $t$ in order to efficiently estimate the covariance matrix with high precision. As a result, practitioners typically try to reduce the dimensionality of this estimation problem by making some reasonable modelling assumptions on the excess returns of the assets. For instance a popular modelling framework are factor models (\cref{sec:factor_models}), which effectively reduces the dimensionality of the covariance matrix to $\mathcal{O}(K^2 + N)$, where $K$ is the number of factors specified by the user---see \cref{sec:factor_models} for more details.
+\paragraph{Estimating the asset return statistics} One of the key challenges involved with deploying an MPT solution comes from the fact that the mean vector and covariance matrix of interest is unknown in practice and therefore has to be estimated (or predicted) from the available data $\mathcal{D}_t \in \mathbb{D}$. The mean vector has $\mathcal{O}(N)$ elements that has to be estimated, whilst the covariance matrix has $\mathcal{O}(N^2)$ number of elements to be estimated. In practice, one does not usually have enough data points at each time $t$ in order to efficiently estimate the covariance matrix with high precision. As a result, practitioners typically try to reduce the dimensionality of this estimation problem by making some reasonable modelling assumptions on the excess returns of the assets. For instance a popular modelling framework are factor models (\cref{sec:factor_models}), which effectively reduces the dimensionality of the covariance matrix to $\mathcal{O}(K^2 + N)$, where $K$ is the number of factors specified by the user---see \cref{sec:factor_models} for more details.
 %%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modelling the returns}
-One of the main problems in active portfolio management is concerned with the modelling of excess returns \eqref{eqn:relative_return}. In particular, one often tries to model the excess returns of the $N$ assets, at time $t > 0$, as a function of the information set:
+One of the main problems in active portfolio management is concerned with the modelling of excess returns \eqref{eqn:relative_return}. In particular, one often tries to model the excess returns of the assets, at time $t > 0$, as a function of the information set:
 \begin{equation}
     \mathbf{R}_t - R^{\text{rf}}_t \mathbf{1}_N = g_t(\mathcal{D}_t) + \boldsymbol{\epsilon}_t,
     \label{eqn:return_model}
@@ -257,15 +241,15 @@ at time $t>0$. The variables in the model are outlined as follows:
 
 \paragraph{Statistics} The expectation and variance of the excess returns of any investment $\mathcal{I} \in \mathbb{I}$ under \eqref{eqn:multi_factor_model} is then given by:
 \begin{align}
-	\mathbb{E}[R_t(\mathcal{I})] &= \mathbf{w}^T (\mathbb{E}[\mathbf{B}_t \mathbf{f}_t] + \mathbb{E}[\mathbf{u}_t]),
+	\mathbb{E}[R_t^{\text{p}}] &= \mathbf{w}^T (\mathbb{E}[\mathbf{B}_t \mathbf{f}_t] + \mathbb{E}[\mathbf{u}_t]),
 	\\
-	\mathbb{V}\text{ar}[R_t(\mathcal{I})] 
+	\mathbb{V}\text{ar}[R_t^{\text{p}}] 
 	&= \mathbf{w}^T \mathbb{V}\text{ar}[\mathbf{B}_t \mathbf{f}_t + \mathbf{u}_t] \mathbf{w}
 	\\
 	&= \mathbf{w}^T \left(\mathbb{V}\text{ar}[\mathbf{B}_t \mathbf{f}_t] + 2\text{Cov}[\mathbf{B}_t \mathbf{f}_t, \mathbf{u}_t] + \mathbb{V}\text{ar}[\mathbf{u}_t]\right) \mathbf{w}.
 \end{align}
 
-\paragraph{Alphas and betas} The alpha of the assets are defined as the expectation of the idiosyncratic returns $\boldsymbol{\alpha} = \mathbb{E}[\mathbf{u}_t]^T \in \mathbb{R}^N$. For a particular investment $\mathcal{I} \in \mathbb{I}$, the corresponding beta is defined as the covariance of the excess returns preconditioned by the individual variances of the factors: $\boldsymbol{\beta} = \mathbf{D}_t^{-1} \text{Cov}[R_t(\mathcal{I}) - R^{\text{rf}}_t, \mathbf{f}_t] \in \mathbb{R}^K$, where $\mathbf{D}_t \in \mathbb{R}^{K \times K}$ is the matrix formed using the diagonal of the factor covariance matrix $\mathbb{V}\text{ar}[\mathbf{f}_t] \in \mathbb{R}^{K \times K}$.
+\paragraph{Alphas and betas} The alphas of the assets are defined as the expectation of the idiosyncratic returns $\alpha^{(n)} = \mathbb{E}[u^{(n)}_t] \in \mathbb{R}$ for $n \in [N]$. For a particular investment $\mathcal{I} \in \mathbb{I}$, the corresponding betas are defined as the covariance of the excess returns with the factors divided by variances of the factors: $\beta^{(k)} = \mathbb{V}\text{ar}[f_t^{(k)}]^{-1} \text{Cov}[R_t^{\text{p}} - R^{\text{rf}}_t, f_t^{(k)}] \in \mathbb{R}$ for $k \in [K]$.
 
 \paragraph{Risk premiums} The risk premiums of the factors are given its expectation $\mathbb{E}[\mathbf{f}_t] \in \mathbb{R}^K$. Intuitively, these risk premiums represent the excess returns that we expect to get from taking on the systematic risk associated with the factors. In contrast, the alpha parameter represents the additional expected excess return that are not explained by the factors. As a result, investors are often interested in designing strategies with positive alpha. That is, strategies whose expected performance exceed what the conventional excess returns are (as dictated by the risk premiums and the betas) for the associated risk that is taken on.
 
@@ -277,7 +261,7 @@ at time $t>0$. The variables in the model are outlined as follows:
 \end{enumerate}
 Then the variance of the excess returns reduces down to
 \begin{align}
-	\mathbb{V}\text{ar}[R_t(\mathcal{I})]
+	\mathbb{V}\text{ar}[R_t^{\text{p}}]
 	&= \mathbf{w}^T \left( \mathbf{B}_t\mathbb{V}\text{ar}[\mathbf{f}_t] \mathbf{B}_t^T + \mathbb{V}\text{ar}[\mathbf{u}_t]\right) \mathbf{w}
 	= \mathbf{w}^T \boldsymbol{\Sigma}_t \mathbf{w}.
 \end{align}
@@ -303,7 +287,7 @@ Equipped with this expression, one only needs to estimate $\mathcal{O}(K^2 + N)$
 \subsubsection{Single factor model}
 When we have only a single factor, $K=1$, then \eqref{eqn:multi_factor_model} reduces down to the single factor model
 \begin{equation}
-	R_t(\mathcal{I}) - R^{\text{rf}}_t = \sum_{n=1}^N w^{(n)} B_t^{(n)} f_t + \sum_{n=1}^N w^{(n)} u^{(n)}_t
+	R_t^{\text{p}} - R^{\text{rf}}_t = \sum_{n=1}^N w^{(n)} B_t^{(n)} f_t + \sum_{n=1}^N w^{(n)} u^{(n)}_t
 	\label{eqn:single_factor_model}
 \end{equation}
 at time $t>0$. A special case of this single factor model is the Capital Asset Pricing Model (CAPM) \citep{sharpe1964jf}. In this model, we assume that the excess returns obeys \eqref{eqn:single_factor_model} and satisfies the following conditions:
@@ -314,12 +298,12 @@ at time $t>0$. A special case of this single factor model is the Capital Asset P
 \end{enumerate}
 Following \citet[Chapter 1]{grinold1999}, one can define the alpha and beta of this investment as the intercept and gradient of the least squares fit obtained by regressing the excess return of the investment with the excess market return:
 \begin{equation}
-	R_t(\mathcal{I}) - R^{\text{rf}}_t
+	R_t^{\text{p}} - R^{\text{rf}}_t
 	= \alpha_t + \beta_t (R^{\text{m}}_t - R^{\text{rf}}_t) + \xi_t,
 \end{equation}
 where $\xi_t$ is the residual which is assumed to have zero mean and 
 \begin{equation}
-	\beta_t = \frac{\text{Cov}[R_t(\mathcal{I}) - R^{\text{rf}}_t, R^{\text{m}}_t - R^{\text{rf}}_t]}{ \mathbb{V}\text{ar}[R^{\text{m}}_t - R^{\text{rf}}_t]}.
+	\beta_t = \frac{\text{Cov}[R_t^{\text{p}} - R^{\text{rf}}_t, R^{\text{m}}_t - R^{\text{rf}}_t]}{ \mathbb{V}\text{ar}[R^{\text{m}}_t - R^{\text{rf}}_t]}.
 \end{equation} 
 Notice that the second CAPM assumption is in essence equal to the statement that $\alpha_t = 0$. That is, investors are only rewarded for bearing the systematic risk associated with the market. The only difference between investors is their risk tolerance. The amount of risk is dictated by the $\beta_t$ parameter. When $\beta_t=1$, we assume the same risk as the market; when beta is greater (or smaller) than one, we assume more (or less) risk than the market, respectively. Naturally, the more risk we take on, the greater the expected return we expect to get. 
 
