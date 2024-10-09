@@ -119,7 +119,7 @@ The goal of this article is to present a focussed and subjective summary on some
 \section{Notation}
 For additional generality, we adopt our own notation in this work, which differs slightly from the notation adopted by \cite{grinold1999}. For bookkeeping purposes, we now highlight some of the key notation that will be used throughout this work.
 
-\paragraph{Space of financial investments.} We let $\mathbb{I}$ denote the space (or universe) of investments. An individual investment will be denoted by $\mathcal{I} \in \mathbb{I}$. Each investment will be assumed to be a comprised of a weighted collection of positions on $N-1$ unique assets $\mathbb{A} = \{\mathcal{A}_1, \dots, \mathcal{A}_{N-1}\} \subset \mathbb{I}$ and cash holding$\mathcal{A}_N := \mathcal{C}$. More formally, every investment $\mathcal{I}$ can be identified by a weight vector 
+\paragraph{Space of financial investments.} We let $\mathbb{I}$ denote the space (or universe) of investments. An individual investment will be denoted by $\mathcal{I} \in \mathbb{I}$. Each investment will be assumed to be a comprised of a weighted collection of positions on $N-1$ unique assets $\mathbb{A} = \{\mathcal{A}_1, \dots, \mathcal{A}_{N-1}\} \subset \mathbb{I}$ and cash holding $\mathcal{A}_N := \mathcal{C}$. More formally, every investment $\mathcal{I}$ can be identified by a weight vector 
 \begin{equation}
 	\mathbb{W} := \{\mathbf{w} = (w^{(1)},\dots, w^{(N)}) \in \mathbb{R}^{N+1}: \mathbf{w}^T \mathbf{1}_{N} = 1\},
 \end{equation}
@@ -129,7 +129,7 @@ where $\mathbf{1}_N \in \mathbb{R}^{N}$ is a vector of ones. Notably, the weight
 The goal of this section is to highlight some of the core conventions and ideas that are often present in the finance literature.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Returns}
-The return of an investment is often reported in the percentage range. More precisely, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the relative change in profit). Concretely, suppose we have an investment $\mathcal{I} \in \mathbb{I}$ whose value is given by $v_{t_0}(\mathcal{I}) \in \mathbb{R}$ at time $t_0$ and $v_T(\mathcal{I}) \in \mathbb{R}$ at some future time $t$, then the return of this investment at this latest time is given by
+The return of an investment is often reported in the percentage range. More precisely, one does not report the raw numerical return (i.e.\ the change in profit), but instead one reports the rate of return (i.e.\ the relative change in profit). Concretely, suppose we have an investment $\mathcal{I} \in \mathbb{I}$ whose value is given by $v_{t_0}(\mathcal{I}) \in \mathbb{R}$ at time $t_0$ and $v_T(\mathcal{I}) \in \mathbb{R}$ at some future time $t$, then the return of this investment (or portfolio) at this latest time is given by
 \begin{equation}
     R_t^{\text{p}} := R_t(\mathcal{I}) := \frac{v_t(\mathcal{I}) - v_{t_0}(\mathcal{I})}{v_{t_0}(\mathcal{I})} \in \mathbb{R}.
     \label{eqn:return}
@@ -139,7 +139,6 @@ Notice that this number tends to infinity when the initial value approaches zero
 \begin{remark}
 	[Other value streams] In practice, one must also account for other profits gained by holding onto the investment in equation \eqref{eqn:return}. For example, one might also include gains from dividends. Out of convenience, we ignore subtle technicalities such as this.
 \end{remark}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Everything is relative}
 Performance assessment is traditionally defined on a relative basis. That is, one typically computes the performance of an investment in comparison to another one. Specifically, we are often interested in the return of an investment $\mathcal{I} \in \mathbb{I}$ relative to some benchmark $\mathcal{B} \in \mathbb{I}$:
@@ -156,7 +155,6 @@ Practitioners often set this benchmark rate to either the risk-free rate or the 
 \begin{remark}
 	[Empty investment] Note that we recover the original notion of return \eqref{eqn:return} if we set our benchmark to the empty investment.
 \end{remark}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The meaning of risk}
 Following \cite{grinold1999}, the risk associated with an investment is defined as the standard deviation of its return. More precisely, the risk associated with an investment $\mathcal{I} \in \mathbb{I}$, at a time $t > 0$, is
@@ -178,7 +176,7 @@ The distinction between an ex-ante (before the event) approach and an ex-post (a
 
 \paragraph{Risk analysis} A core problem in asset management is concerned with the quantification of risk. It is important to note that one is interested in estimating risk in both the ex-ante and ex-post setting. In the ex-ante setting, we are interested estimating risk in order to incorporate it into our active decision-making. Whilst, in the ex-post setting, we are interested in assessing risk in order to identify its main drivers and also to properly assess the realised performance of an investment or portfolio manager.
 
-\paragraph{Information set} We denote the historical information set, at time $t > 0$, by $\mathcal{D}_t \in \mathbb{D}$, where $\mathbb{D}$ denotes the set of all possible historical information sets. Confusingly, some authors abuse this notation because they allow it to be defined ambiguously in order to accommodate for both the ex-ante and ex-post setting. More specifically, in the ex-ante (or ex-post) setting, these authors let $\mathcal{D}_t$ denote the information set containing all of the information available at the beginning (or end) of time $t$, respectively. This convention is convenient from a writing perspective as it covers both of these temporal settings simultaneously. On the other hand, it is definitely confusing from a reader perspective who could easily be misled. Despite this weakness, we will also follow this convention as it allows for easier comparisons between this document and other related works.
+\paragraph{Information set} We denote the historical information set, at time $t > 0$, by $\mathcal{D}_t \in \mathbb{D}$, where $\mathbb{D}$ denotes the set of all possible historical information sets. Confusingly, some authors abuse this notation because they allow it to be defined ambiguously in order to accommodate for both the ex-ante and ex-post setting. More specifically, in the ex-ante (or ex-post) setting, these authors let $\mathcal{D}_t$ denote the information set containing all of the information available at the beginning (or end) of time $t$, respectively. This convention is convenient from a writing perspective as it covers both of these temporal settings simultaneously. On the other hand, it is definitely confusing from a reader perspective who could easily be misled. To avoid this confusion, in this work, we will just look at the ex-ante set-up where the historical data $\mathcal{D}_t$ is used to represent all the information that is known at the beginning on time $t$. The ex-post setting can be handled similarly.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Garbage in, garbage out}
@@ -199,7 +197,11 @@ The goal of Modern Portfolio Theory (MPT) \citep{markowitz1952jf} is to find por
 	\mathbf{w}^T\boldsymbol{\Sigma}_t \mathbf{w} \leq \delta^2,
 	\label{eqn:mean_variance_problem}
 \end{align}
-for any time $t > 0$, where the $\boldsymbol{\mu}_t \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t \in \mathbb{R}^{N \times N}$ denotes the mean and covariance matrix of the returns of the base assets (and cash). That is, $\boldsymbol{\mu}_t := \mathbb{E}[\mathbf{R}_t] \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t := \mathbb{V}\text{ar}[\mathbf{R}_t] \in \mathbb{R}^{N \times N}$ where $\mathbf{R}_t = (R_t(\mathcal{A}_1), \dots, R_t(\mathcal{A}_N)) \in \mathbb{R}^N$. The mean of the cash holding is typically assumed to follow the risk-free rate $\mathbb{E}[\mu_t^{(N)}] = \mathcal{R}_t^{\text{rf}} \in \mathbb{R}$. Moreover, the variance and covariances of the cash holdings is typically assumed to be zero.
+for any time $t > 0$, where the $\boldsymbol{\mu}_t \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t \in \mathbb{R}^{N \times N}$ denotes the mean and covariance matrix of the returns of the base assets (and cash). That is, the reward vector is denoted by
+\begin{equation}
+	\mathbf{R}_t = (R_t(\mathcal{A}_1), \dots, R_t(\mathcal{A}_N)) \in \mathbb{R}^N,
+\end{equation}
+whilst the mean vector and covariance matrix is given by $\boldsymbol{\mu}_t := \mathbb{E}[\mathbf{R}_t] \in \mathbb{R}^N$ and $\boldsymbol{\Sigma}_t := \mathbb{V}\text{ar}[\mathbf{R}_t] \in \mathbb{R}^{N \times N}$, respectively. The cash holding is often assumed to be known and fixed to the risk-free rate. In particular, $\mathbb{E}[\mu_t^{(N)}] = \mathcal{R}_t^{\text{rf}}$ and $\Sigma_t^{(i, j)} = 0$ when either $i$ or $j$ is equal to $N$.
 
 \paragraph{Estimating the asset return statistics} One of the key challenges involved with deploying an MPT solution comes from the fact that the mean vector and covariance matrix of interest is unknown in practice and therefore has to be estimated (or predicted) from the available data $\mathcal{D}_t \in \mathbb{D}$. The mean vector has $\mathcal{O}(N)$ elements that has to be estimated, whilst the covariance matrix has $\mathcal{O}(N^2)$ number of elements to be estimated. In practice, one does not usually have enough data points at each time $t$ in order to efficiently estimate the covariance matrix with high precision. As a result, practitioners typically try to reduce the dimensionality of this estimation problem by making some reasonable modelling assumptions on the excess returns of the assets. For instance a popular modelling framework are factor models (\cref{sec:factor_models}), which effectively reduces the dimensionality of the covariance matrix to $\mathcal{O}(K^2 + N)$, where $K$ is the number of factors specified by the user---see \cref{sec:factor_models} for more details.
 %%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -278,11 +280,11 @@ Equipped with this expression, one only needs to estimate $\mathcal{O}(K^2 + N)$
 	\item If both $\mathbf{B}_t$ and $\mathbf{f}_t$ are unknown, then we can try to estimate these two unknowns jointly using a statistical strategy such as Principle Component Analysis (PCA). Notably, if a PCA strategy is adopted, then the resulting estimate for the latent exposures and factors are not uniquely defined. In particular, appropriate rotations of these  latent quantities lead to equally viable results.
 \end{itemize}
 
-% \begin{remark}
-% 	[Excess asset returns] The unknown parameters of the multi-factor model \eqref{eqn:multi_factor_model} are usually estimated based on the individually observed excess asset returns $\mathcal{A}_n \in \mathbb{A}$ and not the returns of the different portfolios $\mathcal{I} \in \mathbb{I}$. Intuitively, this approach makes sense when the asset excess returns are observables as this reduces the number of parameters that we should estimate per asset. \textcolor{magenta}{Question to self: Are there occasions when using the portfolio excess returns makes more sense?}
-% \end{remark}
-
-\paragraph{Estimating the risk premiums} When the factor returns corresponds to the excess returns of a portfolio that is tradeable, then the corresponding risk premiums can be estimated using a simple sample average of the observed excess returns. When the factor returns corresponds to a non-tradeable quantity, that is, factors that are not portfolios, then some additional work has to be done. In particular, the most prevalent strategy is to construct a tradeable portfolio, which in some sense mimics the behaviour of this non-tradeable factor. At a mathematical level, we must try to find a weight vector that best matches this factor. For more information on the different strategies that one can undertake in order to construct this factor-mimicking weight, consult \citet[Section 3.3]{giglio2022arfe}.
+\paragraph{Estimating the risk premiums} When the factor returns corresponds to the excess returns of a portfolio that is tradeable, then the corresponding risk premiums can be estimated using a simple sample average of the observed excess returns. When the factor returns corresponds to a non-tradeable quantity, that is, factors that are not portfolios, then some additional work has to be done. In particular, the most prevalent strategy is to construct a tradeable portfolio, which in some sense mimics the behaviour of this non-tradeable factor. At a mathematical level, this problem reduces down to finding a weight vector which best matches this factor---see \citet[Section 3.3]{giglio2022arfe} for more details. As a consequence of these ideas, one can, without loss of generality, write the vector of factor returns as a projection of the asset returns: 
+\begin{equation}
+	\mathbf{f}_t = \mathbf{H}_t^T \mathbf{R}_t \in \mathbb{R}^K,
+\end{equation}
+where $\mathbf{H}_t = (\mathbf{h}_t^{(1)}, \dots, \mathbf{h}_t^{(K)}) \in \mathbb{R}^{K \times N}$ with $\mathbf{h}_t^{(k)} \in \mathbb{R}^N$ representing the weight vector associated with factor $k \in [K]$. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Single factor model}
 When we have only a single factor, $K=1$, then \eqref{eqn:multi_factor_model} reduces down to the single factor model
@@ -319,24 +321,6 @@ Arbitrage Pricing Theory (APT) is a generalisation to CAPM. Instead of just usin
 In contrast with CAPM, these assumptions are based on a well-known arbitrage argument. More specifically, suppose that the multi-factor model \eqref{eqn:multi_factor_model} holds and the APT assumptions do not. Then, whenever one manages to identify a mispriced investment (according to the factor model), one can potentially design a long-short type portfolio in order to generate returns without any expense---an example of such a strategy is outlined by \citet[Chapter 7]{grinold1999}. In other words, these APT assumptions are sufficient in order to prevent these arbitrage opportunities.
 
 A common criticism about the APT model is that it does not tell use what factors to use. As a result, many practitioners often favour more explicit models which tells us explicitly what factors to use, such as the Fama-French models \citep{fama1993jofe,fama2015jofe}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Machine learning}
-% \textcolor{red}{TODO: draft some preliminary ideas.}
-%Given a fixed form for the information set $H_t$, it is tempting to treat \eqref{eqn:return_model} and \eqref{eqn:expected_return_model} as a classic machine learning problem. That is, we select the function $f$ or $g$ from a particularly expressive family of models $\mathbb{M}$ and minimise some reasonable loss function in order to find the ``best'' model. 
-%
-%\paragraph{Regression on the excess returns} To find the best model for \eqref{eqn:return_model}, we just minimise some discrepancy $\mathcal{D}$ between the distribution of excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated discrepancy:
-%\begin{equation}
-%    f^* \in \argmin_{f \in \mathbb{M}} \int_{t \in \mathbf{T}} \mathcal{D}(\mathcal{R}_t, f(H_t)) dt,
-%\end{equation}
-%for some appropriate time horizon $\mathbf{T}$.
-%
-%\paragraph{Regression on the expected excess returns} To find the best model for \eqref{eqn:expected_return_model}, we just minimise some scoring function $S$ between the expected excess returns and distribution of explained excess returns over time. For instance, we can minimise the integrated score:
-%\begin{equation}
-%    g^* \in \argmin_{g \in \mathbb{M}} \int_{t \in \mathbf{T}} S(g(H_t), \bar{\mathcal{R}}_t) dt,
-%\end{equation}
-%for some appropriate time horizon $\mathbf{T}$.
-%\\ \\
-%Both of these models rely on quantities or things we might not be able to compute or optimise in practice. They are just equations to keep in mind. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \bibliographystyle{plainnat}
